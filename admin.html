@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khazar Inji — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --dark: #0d0b08;
+    --dark2: #161310;
+    --dark3: #1e1a14;
+    --dark4: #2a2318;
+    --text: #f0e8d8;
+    --text-dim: #a89880;
+    --red: #e05555;
+    --green: #4caf7d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--dark); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+  /* LOGIN */
+  .login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .login-box {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 20px;
+    padding: 40px 32px;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+  .login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--gold); margin-bottom: 6px; }
+  .login-box p { font-size: 11px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px; }
+
+  /* ADMIN LAYOUT */
+  .admin-layout { display: none; min-height: 100vh; }
+  .admin-layout.show { display: flex; flex-direction: column; }
+
+  .topbar {
+    background: var(--dark2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar h1 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold); }
+  .topbar span { font-size: 11px; color: var(--text-dim); }
+
+  .admin-content { display: flex; flex: 1; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    background: var(--dark2);
+    border-right: 1px solid rgba(201,168,76,0.1);
+    padding: 16px 0;
+    flex-shrink: 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 57px);
+    position: sticky;
+    top: 57px;
+  }
+
+  .sidebar-item {
+    padding: 10px 20px;
+    font-size: 12px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    letter-spacing: 0.5px;
+  }
+  .sidebar-item:hover { color: var(--text); background: rgba(201,168,76,0.05); }
+  .sidebar-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .sidebar-section { padding: 16px 20px 6px; font-size: 10px; color: var(--text-dim); opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; }
+
+  /* MAIN */
+  .main { flex: 1; padding: 24px; overflow-y: auto; }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--dark2); border: 1px solid rgba(201,168,76,0.15); border-radius: 12px; padding: 18px; }
+  .stat-card .val { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--gold); }
+  .stat-card .lbl { font-size: 11px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.5px; }
+
+  /* TABLE */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .toolbar input, .toolbar select {
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .toolbar input { flex: 1; min-width: 180px; }
+  .toolbar input:focus { border-color: var(--gold); }
+
+  .items-table { width: 100%; border-collapse: collapse; }
+  .items-table th {
+    text-align: left;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .items-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+    vertical-align: middle;
+  }
+  .items-table tr:hover td { background: rgba(201,168,76,0.04); }
+
+  .price-cell { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--gold); }
+
+  .action-btn {
+    background: none;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--text-dim);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Montserrat', sans-serif;
+    margin-right: 4px;
+  }
+  .action-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .action-btn.del:hover { border-color: var(--red); color: var(--red); }
+
+  .cat-badge {
+    background: var(--dark4);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  /* FORM */
+  .form-card { background: var(--dark2); border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+  .form-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold); margin-bottom: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--dark3); }
+
+  .btn { background: var(--gold); color: var(--dark); border: none; border-radius: 8px; padding: 12px 24px; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 12px; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; }
+  .btn:hover { opacity: 0.9; }
+  .btn.secondary { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+  .btn.danger { background: var(--red); color: white; }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; padding: 20px; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--dark2); border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 24px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+  .modal h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-bottom: 20px; }
+
+  /* TOAST */
+  .toast { position: fixed; top: 20px; right: 20px; background: var(--green); color: white; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; z-index: 999; transform: translateX(200px); opacity: 0; transition: all 0.3s; }
+  .toast.show { transform: translateX(0); opacity: 1; }
+
+  /* EXPORT AREA */
+  .export-area { background: var(--dark3); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 14px; font-size: 11px; color: var(--text-dim); font-family: monospace; white-space: pre-wrap; max-height: 300px; overflow-y: auto; margin-top: 12px; word-break: break-all; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h1>Khazar Inji</h1>
+    <p>Admin Panel</p>
+    <div class="form-group" style="text-align:left;margin-bottom:14px">
+      <label>İstifadəçi adı</label>
+      <input type="text" id="loginUser" placeholder="admin">
+    </div>
+    <div class="form-group" style="text-align:left;margin-bottom:20px">
+      <label>Şifrə</label>
+      <input type="password" id="loginPass" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn" style="width:100%" onclick="doLogin()">Daxil ol</button>
+    <p style="font-size:11px;color:var(--text-dim);margin-top:14px">Default: admin / khazar2024</p>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT -->
+<div class="admin-layout" id="adminLayout">
+  <div class="topbar">
+    <h1>⚙️ Admin Panel — Khazar Inji</h1>
+    <div style="display:flex;align-items:center;gap:16px">
+      <a href="index.html" target="_blank" style="color:var(--gold);font-size:12px;text-decoration:none">🔗 Menyuya bax</a>
+      <span onclick="logout()" style="cursor:pointer;font-size:12px;color:var(--text-dim)">Çıxış</span>
+    </div>
+  </div>
+  <div class="admin-content">
+    <div class="sidebar" id="sidebar"></div>
+    <div class="main" id="mainContent"></div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h3 id="modalTitle">Məhsulu redaktə et</h3>
+    <div id="modalBody"></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn" onclick="saveItem()">Yadda saxla</button>
+      <button class="btn secondary" onclick="closeModal()">Ləğv et</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== AUTH ==========
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'khazar2024';
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value;
+  const p = document.getElementById('loginPass').value;
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminLayout').classList.add('show');
+    initAdmin();
+  } else {
+    showToast('❌ Yanlış şifrə!', '#e05555');
+  }
+}
+
+function logout() {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminLayout').classList.remove('show');
+}
+
+// ========== DATA (same as menu) ==========
+let menuData = {
+  categories: [
+    { id: 'setler', name: 'Setlər', icon: '🎁' },
+    { id: 'gin', name: 'Gin', icon: '🍸' },
+    { id: 'pastalar', name: 'Pastalar', icon: '🍝' },
+    { id: 'steykler', name: 'Steyklər', icon: '🥩' },
+    { id: 'souslar', name: 'Souslar', icon: '🫙' },
+    { id: 'soyuq', name: 'Soyuq Qəlyanaltı', icon: '🥗' },
+    { id: 'isti', name: 'İsti Qəlyanaltı', icon: '🍳' },
+    { id: 'salatlar', name: 'Salatlar', icon: '🥙' },
+    { id: 'sorbalar', name: 'Şorbalar', icon: '🍲' },
+    { id: 'toyuq', name: 'Toyuq', icon: '🍗' },
+    { id: 'et', name: 'Ət Yeməkləri', icon: '🥩' },
+    { id: 'qarnirlər', name: 'Qarnirlər', icon: '🥔' },
+    { id: 'baliq', name: 'Balıq', icon: '🐟' },
+    { id: 'saclar', name: 'Saclar', icon: '🫕' },
+    { id: 'kabablar', name: 'Kabablar', icon: '🔥' },
+    { id: 'sendvicler', name: 'Sendviçlər', icon: '🍔' },
+    { id: 'pizzalar', name: 'Pizzalar', icon: '🍕' },
+    { id: 'meyveler', name: 'Meyvələr', icon: '🍇' },
+    { id: 'desertler', name: 'Desertlər', icon: '🍰' },
+    { id: 'isti-ickilər', name: 'İsti İçkilər', icon: '☕' },
+    { id: 'meyvə-sulari', name: 'Meyvə Suları', icon: '🥤' },
+    { id: 'alkoqolsuz', name: 'Alkoqolsuz Kokteyllər', icon: '🍹' },
+    { id: 'alkoqollu', name: 'Alkoqollu Kokteyllər', icon: '🍸' },
+    { id: 'serinlesdirici', name: 'Sərinləşdiricilər', icon: '🥤' },
+    { id: 'piveler', name: 'Pivələr', icon: '🍺' },
+    { id: 'araqlar', name: 'Araqlar', icon: '🥃' },
+    { id: 'serablar', name: 'Şərablar', icon: '🍷' },
+    { id: 'tekila', name: 'Tekila', icon: '🥃' },
+    { id: 'viskiler', name: 'Viskillər', icon: '🥃' },
+    { id: 'rom', name: 'Rom', icon: '🥃' },
+    { id: 'konyak', name: 'Konyak', icon: '🥃' },
+    { id: 'sampan', name: 'Şampan', icon: '🍾' },
+    { id: 'martini', name: 'Martini', icon: '🍸' },
+    { id: 'likor', name: 'Likor', icon: '🍹' },
+    { id: 'qelyanlar', name: 'Qəlyanlar', icon: '💨' }
+  ],
+  items: {}
+};
+
+// Load from localStorage
+function loadData() {
+  const saved = localStorage.getItem('khazar_menu_items');
+  if (saved) {
+    try { menuData.items = JSON.parse(saved); } catch(e) {}
+  }
+}
+
+function saveData() {
+  localStorage.setItem('khazar_menu_items', JSON.stringify(menuData.items));
+}
+
+let currentView = 'dashboard';
+let editingItem = null;
+let editingCat = null;
+
+function initAdmin() {
+  loadData();
+  renderSidebar();
+  showDashboard();
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  let html = `<div class="sidebar-section">Ümumi</div>
+    <div class="sidebar-item ${currentView==='dashboard'?'active':''}" onclick="showDashboard()">📊 İdarə Paneli</div>
+    <div class="sidebar-item ${currentView==='add'?'active':''}" onclick="showAddItem()">➕ Məhsul əlavə et</div>
+    <div class="sidebar-item ${currentView==='export'?'active':''}" onclick="showExport()">📤 Export/Import</div>
+    <div class="sidebar-section">Kateqoriyalar</div>`;
+  menuData.categories.forEach(c => {
+    const count = (menuData.items[c.id] || []).length;
+    html += `<div class="sidebar-item ${currentView===c.id?'active':''}" onclick="showCat('${c.id}')">
+      ${c.icon} ${c.name} <span style="float:right;font-size:10px;background:var(--dark4);padding:2px 6px;border-radius:10px">${count}</span>
+    </div>`;
+  });
+  sb.innerHTML = html;
+}
+
+// DASHBOARD
+function showDashboard() {
+  currentView = 'dashboard';
+  renderSidebar();
+  let totalItems = 0;
+  let totalCats = 0;
+  menuData.categories.forEach(c => {
+    const items = menuData.items[c.id] || [];
+    if (items.length) { totalCats++; totalItems += items.length; }
+  });
+
+  let recentHtml = '';
+  menuData.categories.slice(0,5).forEach(c => {
+    const items = menuData.items[c.id] || [];
+    if (items.length) {
+      recentHtml += items.slice(0,2).map(item =>
+        `<tr><td>${item.name}</td><td><span class="cat-badge">${c.name}</span></td><td class="price-cell">${item.price} ₼</td>
+        <td><button class="action-btn" onclick="editItem('${c.id}','${item.id}')">Redaktə</button></td></tr>`
+      ).join('');
+    }
+  });
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="section-title">📊 İdarə Paneli</div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="val">${totalItems}</div><div class="lbl">Məhsul</div></div>
+      <div class="stat-card"><div class="val">${totalCats}</div><div class="lbl">Aktiv Kateqoriya</div></div>
+      <div class="stat-card"><div class="val">${menuData.categories.length}</div><div class="lbl">Ümumi Kateqoriya</div></div>
+    </div>
+    <div class="section-title">📋 Son Məhsullar</div>
+    <div style="background:var(--dark2);border:1px solid rgba(201,168,76,0.15);border-radius:12px;overflow:hidden">
+      <table class="items-table">
+        <thead><tr><th>Ad</th><th>Kateqoriya</th><th>Qiymət</th><th>Əməliyyat</th></tr></thead>
+        <tbody>${recentHtml || '<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:20px">Hələ məhsul yoxdur. Əlavə et!</td></tr>'}</tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn" onclick="showAddItem()">➕ Yeni Məhsul Əlavə Et</button>
+    </div>`;
+}
+
+// CATEGORY VIEW
+function showCat(catId) {
+  currentView = catId;
+  renderSidebar();
+  const cat = menuData.categories.find(c => c.id === catId);
+  const items = menuData.items[catId] || [];
+
+  let rows = items.map((item, i) => `
+    <tr>
+      <td>${item.img ? `<img src="${item.img}" style="width:40px;height:40px;border-radius:6px;object-fit:cover">` : '🍽️'}</td>
+      <td>${item.name}</td>
+      <td>${item.desc || '—'}</td>
+      <td class="price-cell">${item.price} ₼</td>
+      <td>
+        <button class="action-btn" onclick="editItem('${catId}','${item.id}')">✏️ Redaktə</button>
+        <button class="action-btn del" onclick="deleteItem('${catId}','${item.id}')">🗑️ Sil</button>
+      </td>
+    </tr>`).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="section-title">${cat.icon} ${cat.name}</div>
+    <div class="toolbar">
+      <button class="btn" onclick="showAddItem('${catId}')">➕ Bu kateqoriyaya əlavə et</button>
+    </div>
+    <div style="background:var(--dark2);border:1px solid rgba(201,168,76,0.15);border-radius:12px;overflow:hidden">
+      <table class="items-table">
+        <thead><tr><th>Şəkil</th><th>Ad</th><th>Açıqlama</th><th>Qiymət</th><th>Əməliyyat</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:20px">Bu kateqoriyada məhsul yoxdur</td></tr>'}</tbody>
+      </table>
+    </div>`;
+}
+
+// ADD ITEM
+function showAddItem(preselectedCat = '') {
+  currentView = 'add';
+  renderSidebar();
+  const catOptions = menuData.categories.map(c =>
+    `<option value="${c.id}" ${c.id===preselectedCat?'selected':''}>${c.icon} ${c.name}</option>`
+  ).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="section-title">➕ Yeni Məhsul</div>
+    <div class="form-card">
+      <h3>Məhsul məlumatları</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Kateqoriya *</label>
+          <select id="newCat">${catOptions}</select>
+        </div>
+        <div class="form-group">
+          <label>Qiymət (₼) *</label>
+          <input type="number" id="newPrice" placeholder="0.00" step="0.5" min="0">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Məhsulun adı *</label>
+        <input type="text" id="newName" placeholder="Məs: Toyuq salatı">
+      </div>
+      <div class="form-group">
+        <label>Açıqlama / ölçü (istəyə görə)</label>
+        <input type="text" id="newDesc" placeholder="Məs: 300q, 50cl, 2 nəfərlik...">
+      </div>
+      <div class="form-group">
+        <label>Şəkil URL (istəyə görə)</label>
+        <input type="url" id="newImg" placeholder="https://...">
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" onclick="addItem()">✅ Əlavə et</button>
+        <button class="btn secondary" onclick="showDashboard()">Ləğv et</button>
+      </div>
+    </div>`;
+}
+
+function addItem() {
+  const catId = document.getElementById('newCat').value;
+  const name = document.getElementById('newName').value.trim();
+  const price = parseFloat(document.getElementById('newPrice').value);
+  const desc = document.getElementById('newDesc').value.trim();
+  const img = document.getElementById('newImg').value.trim();
+
+  if (!name || isNaN(price)) { showToast('❌ Ad və qiymət mütləqdir!', '#e05555'); return; }
+
+  if (!menuData.items[catId]) menuData.items[catId] = [];
+  menuData.items[catId].push({
+    id: 'custom_' + Date.now(),
+    name, price, desc: desc || null, img: img || null
+  });
+  saveData();
+  showToast('✅ Məhsul əlavə edildi!');
+  showCat(catId);
+}
+
+// EDIT
+function editItem(catId, itemId) {
+  const items = menuData.items[catId] || [];
+  const item = items.find(i => i.id === itemId);
+  if (!item) return;
+  editingItem = itemId;
+  editingCat = catId;
+
+  document.getElementById('modalTitle').textContent = '✏️ Məhsulu Redaktə Et';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="form-group"><label>Ad</label><input type="text" id="editName" value="${item.name}"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Qiymət (₼)</label><input type="number" id="editPrice" value="${item.price}" step="0.5" min="0"></div>
+      <div class="form-group"><label>Açıqlama</label><input type="text" id="editDesc" value="${item.desc||''}"></div>
+    </div>
+    <div class="form-group"><label>Şəkil URL</label><input type="url" id="editImg" value="${item.img||''}"></div>`;
+  document.getElementById('editModal').classList.add('open');
+}
+
+function saveItem() {
+  if (!editingCat || !editingItem) return;
+  const items = menuData.items[editingCat];
+  const idx = items.findIndex(i => i.id === editingItem);
+  if (idx === -1) return;
+
+  items[idx].name = document.getElementById('editName').value.trim();
+  items[idx].price = parseFloat(document.getElementById('editPrice').value);
+  items[idx].desc = document.getElementById('editDesc').value.trim() || null;
+  items[idx].img = document.getElementById('editImg').value.trim() || null;
+
+  saveData();
+  closeModal();
+  showToast('✅ Dəyişikliklər saxlandı!');
+  showCat(editingCat);
+}
+
+function deleteItem(catId, itemId) {
+  if (!confirm('Bu məhsulu silmək istəyirsiniz?')) return;
+  menuData.items[catId] = (menuData.items[catId] || []).filter(i => i.id !== itemId);
+  saveData();
+  showToast('🗑️ Məhsul silindi', '#e05555');
+  showCat(catId);
+}
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('open');
+  editingItem = null;
+  editingCat = null;
+}
+
+// EXPORT/IMPORT
+function showExport() {
+  currentView = 'export';
+  renderSidebar();
+  document.getElementById('mainContent').innerHTML = `
+    <div class="section-title">📤 Export / Import</div>
+    <div class="form-card">
+      <h3>Menyu məlumatlarını export et</h3>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px">Bu JSON məlumatını kopyalayıb index.html faylında menuData.items-ə yapışdırın.</p>
+      <button class="btn" onclick="doExport()">📋 JSON-u kopyala</button>
+      <div class="export-area" id="exportArea" style="display:none"></div>
+    </div>
+    <div class="form-card">
+      <h3>📥 Import et</h3>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px">Köhnə JSON məlumatını bura yapışdırın:</p>
+      <div class="form-group"><textarea id="importArea" rows="5" placeholder='{"setler":[...]}'></textarea></div>
+      <button class="btn" onclick="doImport()">Import Et</button>
+    </div>`;
+}
+
+function doExport() {
+  const json = JSON.stringify(menuData.items, null, 2);
+  const area = document.getElementById('exportArea');
+  area.style.display = 'block';
+  area.textContent = json;
+  navigator.clipboard.writeText(json).then(() => showToast('📋 Kopyalandı!'));
+}
+
+function doImport() {
+  try {
+    const data = JSON.parse(document.getElementById('importArea').value);
+    menuData.items = data;
+    saveData();
+    showToast('✅ Import uğurlu oldu!');
+  } catch(e) {
+    showToast('❌ JSON formatı yanlışdır!', '#e05555');
+  }
+}
+
+// TOAST
+function showToast(msg, bg = '#4caf7d') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = bg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

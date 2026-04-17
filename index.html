@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="az" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Khazar Inji Hotel — Menyu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+[data-theme="light"]{--bg:#f7f5f2;--bg2:#fff;--bg3:#f0ede8;--border:#e8e2d9;--text:#1a1714;--text2:#6b6460;--text3:#9e9590;--gold:#b8860b;--gold-bg:#fdf8ef;--gold-border:#e8d5a0;--shadow:rgba(0,0,0,0.08);--shadow2:rgba(0,0,0,0.14);--header:rgba(255,255,255,0.96);--tab-bg:#b8860b;--tab-text:#fff;--overlay:rgba(0,0,0,0.5);--badge-bg:#e8f5e9;--badge-text:#2e7d32}
+[data-theme="dark"]{--bg:#0f0d0b;--bg2:#1a1714;--bg3:#242018;--border:#2e2820;--text:#f0ebe3;--text2:#a09080;--text3:#6b5e50;--gold:#d4a843;--gold-bg:#1e1a0f;--gold-border:#3a3018;--shadow:rgba(0,0,0,0.3);--shadow2:rgba(0,0,0,0.5);--header:rgba(15,13,11,0.97);--tab-bg:#d4a843;--tab-text:#0f0d0b;--overlay:rgba(0,0,0,0.75);--badge-bg:#1a2e1a;--badge-text:#66bb6a}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden}
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;background:var(--header);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:background .3s,border-color .3s}
+.header-top{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.back-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:16px;transition:all .2s;flex-shrink:0}
+.back-btn:hover{border-color:var(--gold);color:var(--gold)}
+.logo-wrap{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.logo-circle{width:38px;height:38px;border-radius:50%;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:14px;color:var(--gold);font-weight:700;flex-shrink:0;overflow:hidden}
+.logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.logo-text h1{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.logo-text p{font-size:10px;color:var(--text3);letter-spacing:.5px}
+.hdr-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.icon-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:15px;transition:all .2s;position:relative;flex-shrink:0}
+.icon-btn:hover{border-color:var(--gold)}
+.lang-flag{width:20px;height:20px;border-radius:50%;object-fit:cover}
+/* SEARCH */
+.search-bar{padding:0 16px 12px;display:flex;align-items:center}
+.search-wrap{flex:1;position:relative;display:flex;align-items:center}
+.s-icon{position:absolute;left:12px;color:var(--text3);font-size:14px;pointer-events:none}
+.search-in{width:100%;height:40px;background:var(--bg3);border:1.5px solid var(--border);border-radius:20px;padding:0 16px 0 38px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:all .2s}
+.search-in::placeholder{color:var(--text3)}
+.search-in:focus{border-color:var(--gold);background:var(--bg2)}
+/* CATS */
+.cat-nav{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;scrollbar-width:none;border-top:1px solid var(--border);background:var(--header)}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-tab{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.cat-tab:hover{border-color:var(--gold);color:var(--gold)}
+.cat-tab.active{background:var(--tab-bg);border-color:var(--tab-bg);color:var(--tab-text);font-weight:600}
+/* QUICK */
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px 0}
+.quick-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.quick-card:hover{border-color:var(--gold)}
+.qc-icon{font-size:22px;flex-shrink:0}
+.qc-label{font-size:12px;font-weight:600;color:var(--text);line-height:1.3}
+.qc-sub{font-size:10px;color:var(--text3);margin-top:1px}
+/* NOTICE */
+.notice{margin:10px 16px;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:10px;padding:9px 14px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:6px}
+/* MENU */
+.menu-wrap{padding:16px;padding-bottom:100px;max-width:800px;margin:0 auto}
+.sec-title{display:flex;align-items:center;gap:8px;margin:24px 0 14px;scroll-margin-top:180px}
+.sec-title:first-child{margin-top:0}
+.sec-title h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--text)}
+.sec-count{background:var(--bg3);color:var(--text3);font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
+/* GRID */
+.items-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:500px){.items-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:700px){.items-grid{grid-template-columns:repeat(4,1fr)}}
+/* CARD */
+.m-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:0 1px 4px var(--shadow);display:flex;flex-direction:column;animation:fadeUp .3s ease both}
+.m-card:hover{box-shadow:0 4px 16px var(--shadow2);transform:translateY(-1px);border-color:var(--gold-border)}
+.m-card.wide{grid-column:1/-1;flex-direction:row;align-items:center}
+@media(min-width:700px){.m-card.wide{grid-column:auto;flex-direction:column}}
+.card-img-wrap{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);position:relative}
+.m-card.wide .card-img-wrap{width:80px;height:80px;aspect-ratio:auto;border-radius:10px;margin:10px;flex-shrink:0}
+@media(min-width:700px){.m-card.wide .card-img-wrap{width:100%;aspect-ratio:4/3;margin:0;border-radius:0}}
+.card-img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.m-card:hover .card-img{transform:scale(1.04)}
+.card-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:30px;opacity:.35}
+.card-body{padding:10px 10px 8px;flex:1;display:flex;flex-direction:column}
+.m-card.wide .card-body{padding:12px 12px 12px 4px}
+@media(min-width:700px){.m-card.wide .card-body{padding:10px 10px 8px}}
+.card-name{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-desc{font-size:11px;color:var(--text3);margin-bottom:8px}
+.card-bot{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.card-price{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--gold)}
+.add-btn{width:28px;height:28px;border-radius:50%;background:var(--gold);border:none;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;box-shadow:0 2px 8px rgba(184,134,11,.35)}
+.add-btn:hover{transform:scale(1.1)}
+.add-btn:active{transform:scale(.95)}
+.add-btn.in{background:var(--badge-text)}
+/* NO RESULTS */
+.no-res{text-align:center;padding:60px 20px;color:var(--text3)}
+.no-res .nr-ic{font-size:48px;margin-bottom:12px}
+/* CART BAR */
+.cart-bar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(120px);width:calc(100% - 32px);max-width:560px;background:var(--text);color:var(--bg);border:none;border-radius:14px;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;box-shadow:0 8px 30px var(--shadow2);transition:transform .35s cubic-bezier(.34,1.56,.64,1);z-index:90}
+.cart-bar.vis{transform:translateX(-50%) translateY(0)}
+.cb-left{display:flex;align-items:center;gap:10px}
+.cb-badge{background:var(--gold);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.cb-total{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold)}
+/* OVERLAY + SHEET */
+.overlay{position:fixed;inset:0;background:var(--overlay);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.open{opacity:1;pointer-events:all}
+.bsheet{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-radius:20px 20px 0 0;z-index:201;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .32s cubic-bezier(.34,1.2,.64,1)}
+.bsheet.open{transform:translateY(0)}
+.sh-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 0}
+/* ITEM SHEET */
+.is-img{width:100%;height:240px;object-fit:cover}
+.is-body{padding:20px}
+.is-name{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.2}
+.is-desc{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5}
+.is-price{font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);font-weight:700;margin-bottom:20px}
+.qty-row{display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:20px}
+.qty-ctrl{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.qty-ctrl:hover{border-color:var(--gold);color:var(--gold)}
+.qty-val{font-family:'Playfair Display',serif;font-size:28px;color:var(--text);min-width:40px;text-align:center}
+.main-btn{width:100%;height:52px;border-radius:14px;background:var(--gold);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:15px;cursor:pointer;letter-spacing:.3px;transition:opacity .2s;box-shadow:0 4px 16px rgba(184,134,11,.4)}
+.main-btn:hover{opacity:.9}
+/* CART SHEET */
+.cs-body{padding:20px}
+.cs-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ci-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ci-img{width:52px;height:52px;border-radius:10px;object-fit:cover;background:var(--bg3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid var(--border)}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.ci-unit{font-size:12px;color:var(--text3)}
+.ci-ctrl{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.cq-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.cq-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cq-btn.del:hover{border-color:#e05555;color:#e05555}
+.ci-qty{font-size:14px;font-weight:600;min-width:20px;text-align:center}
+.ci-price{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);font-weight:600}
+.cart-empty{text-align:center;padding:40px 20px;color:var(--text3)}
+.cart-empty .icon{font-size:48px;margin-bottom:12px}
+.cs-summary{background:var(--bg3);border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--border)}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
+.sum-row span:first-child{font-size:13px;color:var(--text2)}
+.sum-row span:last-child{font-size:14px;font-weight:500;color:var(--text)}
+.sum-row.tot span{font-size:15px;font-weight:700}
+.sum-row.tot span:last-child{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold)}
+.sum-div{height:1px;background:var(--border);margin:8px 0}
+.field-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block}
+.field-in{width:100%;height:46px;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:0 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;margin-bottom:10px}
+.field-in:focus{border-color:var(--gold)}
+.table-det{display:flex;align-items:center;gap:8px;background:var(--badge-bg);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--badge-text);font-weight:500}
+.note-in{width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;resize:none;transition:border-color .2s;margin-bottom:14px}
+.note-in:focus{border-color:var(--gold)}
+.note-in::placeholder{color:var(--text3)}
+/* SUCCESS */
+.success-sc{text-align:center;padding:40px 24px 30px}
+.suc-icon{font-size:64px;margin-bottom:16px;animation:pop .5s cubic-bezier(.34,1.7,.64,1)}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.suc-title{font-family:'Playfair Display',serif;font-size:26px;color:var(--text);margin-bottom:10px}
+.suc-sub{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:24px}
+/* LANG DD */
+.lang-dd{position:absolute;top:44px;right:0;background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 8px 24px var(--shadow2);z-index:300;display:none;min-width:140px}
+.lang-dd.open{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;font-size:13px;color:var(--text);transition:background .15s}
+.lang-opt:hover{background:var(--bg3)}
+.lang-opt.act{color:var(--gold);font-weight:600}
+/* TOAST */
+.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) scale(.8);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:24px;font-size:13px;font-weight:500;z-index:999;opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 4px 20px var(--shadow2)}
+.toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div class="back-btn" onclick="history.back()">←</div>
+    <div class="logo-wrap">
+      <div class="logo-circle">
+        <img src="https://monyo.az/v4/uploads/a_1203_logo.png" alt="KI" onerror="this.style.display='none';this.parentElement.textContent='KI'">
+      </div>
+      <div class="logo-text">
+        <h1>Khazar Inji Hotel</h1>
+        <p>Bakı, Buzovna</p>
+      </div>
+    </div>
+    <div class="hdr-actions">
+      <div class="icon-btn" id="langBtn" onclick="toggleLang(event)">
+        <img class="lang-flag" id="langFlag" src="https://flagcdn.com/w40/az.png" alt="AZ">
+        <div class="lang-dd" id="langDd">
+          <div class="lang-opt act" onclick="setLang('az','https://flagcdn.com/w40/az.png')"><img class="lang-flag" src="https://flagcdn.com/w40/az.png"> Azərbaycanca</div>
+          <div class="lang-opt" onclick="setLang('en','https://flagcdn.com/w40/gb.png')"><img class="lang-flag" src="https://flagcdn.com/w40/gb.png"> English</div>
+          <div class="lang-opt" onclick="setLang('ru','https://flagcdn.com/w40/ru.png')"><img class="lang-flag" src="https://flagcdn.com/w40/ru.png"> Русский</div>
+        </div>
+      </div>
+      <div class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Tema">🌙</div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <div class="search-wrap">
+      <span class="s-icon">🔍</span>
+      <input class="search-in" type="text" id="searchIn" placeholder="Məhsul axtar..." oninput="onSearch()">
+    </div>
+  </div>
+  <div class="cat-nav" id="catNav"></div>
+</header>
+
+<!-- QUICK ACTIONS -->
+<div class="quick-actions">
+  <div class="quick-card" onclick="showToast('Ofisiant çağırıldı 🛎️')">
+    <span class="qc-icon">🛎️</span>
+    <div><div class="qc-label">Ofisiant çağır</div><div class="qc-sub">İşçilərdən kömək</div></div>
+  </div>
+  <div class="quick-card" onclick="showToast('Hesabınız hazırlanır 🧾')">
+    <span class="qc-icon">🧾</span>
+    <div><div class="qc-label">Hesabı ödə</div><div class="qc-sub">Sürətli ödəniş</div></div>
+  </div>
+</div>
+
+<div class="notice">⚠️ Hesabınıza 10% xidmət haqqı əlavə olunacaq</div>
+
+<div class="menu-wrap" id="menuWrap"></div>
+
+<button class="cart-bar" id="cartBar" onclick="openCart()">
+  <div class="cb-left"><div class="cb-badge" id="cbQty">0</div><span>Sifarişə bax</span></div>
+  <span class="cb-total" id="cbTotal">0.00 ₼</span>
+</button>
+
+<!-- ITEM SHEET -->
+<div class="overlay" id="iOvr" onclick="closeItem()"></div>
+<div class="bsheet" id="iSheet"><div class="sh-handle"></div><div id="iContent"></div></div>
+
+<!-- CART SHEET -->
+<div class="overlay" id="cOvr" onclick="closeCart()"></div>
+<div class="bsheet" id="cSheet"><div class="sh-handle"></div><div class="cs-body" id="cContent"></div></div>
+
+<script>
+// DATA
+const CATS=[
+  {id:'setler',name:'Setlər',icon:'🎁'},{id:'gin',name:'Gin',icon:'🍸'},
+  {id:'pastalar',name:'Pastalar',icon:'🍝'},{id:'steykler',name:'Steyklər',icon:'🥩'},
+  {id:'souslar',name:'Souslar',icon:'🫙'},{id:'soyuq',name:'Soyuq Qəlyanaltı',icon:'🥗'},
+  {id:'isti',name:'İsti Qəlyanaltı',icon:'🍳'},{id:'salatlar',name:'Salatlar',icon:'🥙'},
+  {id:'sorbalar',name:'Şorbalar',icon:'🍲'},{id:'toyuq',name:'Toyuq',icon:'🍗'},
+  {id:'et',name:'Ət Yeməkləri',icon:'🥩'},{id:'qarnirlər',name:'Qarnirlər',icon:'🥔'},
+  {id:'baliq',name:'Balıq',icon:'🐟'},{id:'saclar',name:'Saclar',icon:'🫕'},
+  {id:'kabablar',name:'Kabablar',icon:'🔥'},{id:'sendvicler',name:'Sendviçlər',icon:'🍔'},
+  {id:'pizzalar',name:'Pizzalar',icon:'🍕'},{id:'meyveler',name:'Meyvələr',icon:'🍇'},
+  {id:'desertler',name:'Desertlər',icon:'🍰'},{id:'isti-ickilər',name:'İsti İçkilər',icon:'☕'},
+  {id:'meyvə-sulari',name:'Meyvə Suları',icon:'🥤'},{id:'alkoqolsuz',name:'Alkoqolsuz Kokteyller',icon:'🍹'},
+  {id:'alkoqollu',name:'Alkoqollu Kokteyller',icon:'🍸'},{id:'serinlesdirici',name:'Sərinləşdiricilər',icon:'🥤'},
+  {id:'piveler',name:'Pivələr',icon:'🍺'},{id:'araqlar',name:'Araqlar',icon:'🥃'},
+  {id:'serablar',name:'Şərablar',icon:'🍷'},{id:'tekila',name:'Tekila',icon:'🥃'},
+  {id:'viskiler',name:'Viskillər',icon:'🥃'},{id:'rom',name:'Rom',icon:'🥃'},
+  {id:'konyak',name:'Konyak',icon:'🥃'},{id:'sampan',name:'Şampan',icon:'🍾'},
+  {id:'martini',name:'Martini',icon:'🍸'},{id:'likor',name:'Likor',icon:'🍹'},
+  {id:'qelyanlar',name:'Qəlyanlar',icon:'💨'}
+];
+const ITEMS={
+  setler:[{id:'s1',name:'Food Set',price:31,img:null}],
+  gin:[{id:'g1',name:'Tanquerey Ten',price:8,desc:'50cl',img:null},{id:'g2',name:'Bombay Sapphire',price:8,desc:'50cl',img:null},{id:'g3',name:'Gin Gordons',price:6,desc:'50cl',img:null}],
+  pastalar:[{id:'p1',name:'Spagetti Bolognese',price:13,img:null},{id:'p2',name:'Fettuccine Alfredo',price:12,img:null},{id:'p3',name:'Penne Arrabiata',price:10,img:null}],
+  steykler:[{id:'st1',name:'Kare Yaqnonka Steak',price:36,img:null},{id:'st2',name:'Toyuq Steak',price:8,img:null}],
+  souslar:[{id:'so1',name:'Zoğal Turşusu',price:2,img:null},{id:'so2',name:'Acika',price:2,img:null},{id:'so3',name:'BBQ sous',price:2,img:null},{id:'so4',name:'Narşarab',price:2,img:null},{id:'so5',name:'Svit çili',price:2,img:null},{id:'so6',name:'Ketçup',price:1,img:null},{id:'so7',name:'Mayonez',price:1,img:null},{id:'so8',name:'Xama',price:1,img:null}],
+  soyuq:[
+    {id:'sq1',name:'Tərəvəz buketi',price:10,img:'https://monyo.az/v4/uploads/a_1203_202205201644161245046936.jpg'},
+    {id:'sq2',name:'Turşu assorti',price:10,img:'https://monyo.az/v4/uploads/a_1203_202205201640441315249820.jpg'},
+    {id:'sq3',name:'Pendir assorti',price:10,img:'https://monyo.az/v4/uploads/a_1203_20220520163747394859008.jpg'},
+    {id:'sq4',name:'Babaqanuş',price:5,img:null},{id:'sq5',name:'Badımcan Ruleti',price:4,img:null},
+    {id:'sq6',name:'Qarışıq Zeytun',price:7,img:'https://monyo.az/v4/uploads/a_1203_202205241351252105858336.jpg'},
+    {id:'sq7',name:'Süzmə',price:5,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306122013031483386643.jpg'},
+    {id:'sq8',name:'Acika',price:5,desc:'80qr',img:'https://monyo.az/v4/uploads/a_1203_202205201636131865245793.jpg'},
+    {id:'sq9',name:'Haydari',price:5,img:null},
+    {id:'sq10',name:'Saçaq pendiri',price:5,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230612201533377927408.jpg'},
+    {id:'sq11',name:'Ağ pendir',price:6,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230612201222347396436.jpg'},
+    {id:'sq12',name:'Qatıq',price:3,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306122013031483386643.jpg'},
+    {id:'sq13',name:'Acili Ezme',price:4,img:null},{id:'sq14',name:'Xumus',price:4,img:null}
+  ],
+  isti:[
+    {id:'iq1',name:'Toyuq naqets',price:12,img:'https://monyo.az/v4/uploads/a_1203_20220520164658417184565.jpg'},
+    {id:'iq2',name:'Toyuq qanadı BBQ',price:7,img:null},
+    {id:'iq3',name:'Krevetka tempura',price:12,img:'https://monyo.az/v4/uploads/a_1203_202205201645531516271638.jpg'},
+    {id:'iq4',name:'Mozarella Çubuqları',price:7,img:null},{id:'iq5',name:'Pomıdor Çığırtma',price:7,img:null}
+  ],
+  salatlar:[
+    {id:'sa1',name:'Toyuq salatı',price:8,img:'https://monyo.az/v4/uploads/a_1203_202205201652451480262875.jpg'},
+    {id:'sa2',name:'Yunan salatı',price:6,img:'https://monyo.az/v4/uploads/a_1203_20220520171539982290058.jpg'},
+    {id:'sa3',name:'Sezar toyuq ilə',price:12,img:'https://monyo.az/v4/uploads/a_1203_20220520165034239515356.jpg'},
+    {id:'sa4',name:'Sezar krevetka ilə',price:16,img:'https://monyo.az/v4/uploads/a_1203_20220520165140808445971.jpg'},
+    {id:'sa5',name:'Xırçıltılı Badımcan',price:7,img:null},
+    {id:'sa6',name:'Çoban salatı',price:6,img:'https://monyo.az/v4/uploads/a_1203_202205201714571652689180.jpg'},
+    {id:'sa7',name:'Manqal salatı',price:6,img:'https://monyo.az/v4/uploads/a_1203_202205201649091350988964.jpg'},
+    {id:'sa8',name:'Pomidor Salatı Apsheron',price:6,img:null}
+  ],
+  sorbalar:[
+    {id:'sh1',name:'Göbələk şorbası',price:5,img:'https://monyo.az/v4/uploads/a_1203_202205151120581143686419.jpg'},
+    {id:'sh2',name:'Mərci şorbası',price:5,img:'https://monyo.az/v4/uploads/a_1203_202205151124191767428496.jpg'},
+    {id:'sh3',name:'Toyuq şorbası',price:5,img:'https://monyo.az/v4/uploads/a_1203_202205211601121775665621.jpg'},
+    {id:'sh4',name:'Okroşka',price:4,img:null},
+    {id:'sh5',name:'Tərəvəz şorbası',price:3,img:'https://monyo.az/v4/uploads/a_1203_202205151133051692795750.jpg'},
+    {id:'sh6',name:'Düşbərə',price:5,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306122010391798466176.jpg'},
+    {id:'sh7',name:'Tomat Şorbası',price:5,img:null}
+  ],
+  toyuq:[
+    {id:'ty1',name:'Toyuq faxitos',price:12,img:'https://monyo.az/v4/uploads/a_1203_202205211604002012821380.jpg'},
+    {id:'ty2',name:'Toyuq Langet',price:12,img:null},
+    {id:'ty3',name:'Toyuq Tabaka kartof ile',price:18,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306122355092052714392.jpg'},
+    {id:'ty4',name:'Toyuq şnitsel',price:10,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_2023061222580540437971.jpg'},
+    {id:'ty5',name:'Kənd çolpası nar qovurma',price:20,img:null},
+    {id:'ty6',name:'Toyuq Kotlet Püre ilə',price:9,img:null},{id:'ty7',name:'Toyuq Stroganov',price:12,img:null}
+  ],
+  et:[
+    {id:'et1',name:'Can əti faxitos',price:16,img:'https://monyo.az/v4/uploads/a_1203_20220521161116348734683.jpg'},
+    {id:'et2',name:'Yarpaq dolması',price:12,img:'https://monyo.az/v4/uploads/a_1203_202205151236511880466875.jpg'},
+    {id:'et3',name:'Beef Straganoff',price:16,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230612215530283149297.jpg'},
+    {id:'et4',name:'Çoban qovurma',price:16,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230612215803315805819.jpg'},
+    {id:'et5',name:'Dana Qovurma',price:18,img:null},
+    {id:'et6',name:'Can Əti vişnəli',price:18,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306122215191114594710.jpg'},
+    {id:'et7',name:'Ət langet',price:14,img:null},{id:'et8',name:'Beef Medalyon',price:20,img:null}
+  ],
+  qarnirlər:[
+    {id:'q1',name:'Düyü',price:5,img:'https://monyo.az/v4/uploads/a_1203_202205151312351950940872.jpg'},
+    {id:'q2',name:'Kartof fri',price:6,img:'https://monyo.az/v4/uploads/a_1203_20220515131524208708866.jpg'},
+    {id:'q3',name:'Kartof evsayağı',price:6,img:'https://monyo.az/v4/uploads/a_1203_202205151317041036376169.jpg'},
+    {id:'q4',name:'Tərəvəz qrildə',price:6,img:'https://monyo.az/v4/uploads/a_1203_20220607005619100928097.jpg'},
+    {id:'q5',name:'Püre',price:5,img:'https://monyo.az/v4/uploads/a_1203_202205151320451319064550.jpg'},
+    {id:'q6',name:'Düyü tərəvəzlə',price:5,img:null},{id:'q7',name:'Qreçka',price:5,img:null}
+  ],
+  baliq:[
+    {id:'b1',name:'Qızıl balıq',price:28,img:'https://monyo.az/v4/uploads/a_1203_20220515132316235500977.jpg'},
+    {id:'b2',name:'Dorado tavada',price:19,img:null},{id:'b3',name:'Krevetka pikanto',price:15,img:null},
+    {id:'b4',name:'Pangasius tərəvəz qrildə',price:9,img:null}
+  ],
+  saclar:[
+    {id:'sc1',name:'Sac Çolpa',price:24,img:'https://monyo.az/v4/uploads/a_1203_20220515140331471262005.jpg'},
+    {id:'sc2',name:'Quzu sac',price:30,img:'https://monyo.az/v4/uploads/a_1203_202205151404322078709287.jpg'},
+    {id:'sc3',name:'Can əti sac',price:35,img:'https://monyo.az/v4/uploads/a_1203_202205151405251306821432.jpg'},
+    {id:'sc4',name:'Qarışıq sac',price:40,img:null}
+  ],
+  kabablar:[
+    {id:'k1',name:'Antrikot',price:13,img:'https://monyo.az/v4/uploads/a_1203_20220607005945488493611.jpg'},
+    {id:'k2',name:'Tikə',price:11,img:'https://monyo.az/v4/uploads/a_1203_202206070035012130588356.jpg'},
+    {id:'k3',name:'Lülə quzu əti',price:11,img:'https://monyo.az/v4/uploads/a_1203_20220607005126893221687.jpg'},
+    {id:'k4',name:'Dana basdırma',price:12,img:'https://monyo.az/v4/uploads/a_1203_202206070036251895399272.jpg'},
+    {id:'k5',name:'Toyuq kabab',price:7,img:'https://monyo.az/v4/uploads/a_1203_202206070037331005481669.jpg'},
+    {id:'k6',name:'Tərəvəz assorti',price:3,desc:'1 ədəd',img:'https://monyo.az/v4/uploads/a_1203_202206070038071518507193.jpg'},
+    {id:'k7',name:'Kartof külləmə',price:7,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230612193057312373601.jpg'},
+    {id:'k8',name:'Kənd çolpası manqalda',price:15,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306121941161787442102.jpg'},
+    {id:'k9',name:'Xan Kababı',price:8,img:null},{id:'k10',name:'Quzu Semiçka',price:9,img:null},
+    {id:'k11',name:'Farel Manqal',price:20,img:null},{id:'k12',name:'Dorado Manqalda',price:17,img:null},
+    {id:'k13',name:'Sibas Manqal',price:18,img:null},{id:'k14',name:'Krevetka Manqalda',price:13,img:null},
+    {id:'k15',name:'Beluqa Manqalda',price:27,img:null},{id:'k16',name:'Badımcan kabab',price:1,img:null},
+    {id:'k17',name:'Biber kabab',price:1,img:null},{id:'k18',name:'Pomidor Kabab',price:1,img:null}
+  ],
+  sendvicler:[
+    {id:'sv1',name:'Klab sendviç',price:13,img:'https://monyo.az/v4/uploads/a_1203_20220515142611782541134.jpg'},
+    {id:'sv2',name:'Cheese burger',price:14,img:'https://monyo.az/v4/uploads/a_1203_202205151428001967225473.jpg'},
+    {id:'sv3',name:'Chicken Burger',price:10,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306130000431587869023.jpg'},
+    {id:'sv4',name:'Bif Burger',price:12,img:null}
+  ],
+  pizzalar:[
+    {id:'pz1',name:'Marqarita',price:12,img:'https://monyo.az/v4/uploads/a_1203_202205151453201008950982.jpg'},
+    {id:'pz2',name:'Toyuq göbələk pizza',price:17,img:'https://monyo.az/v4/uploads/a_1203_202205151455041634762467.jpg'},
+    {id:'pz3',name:'Pizza Mix',price:20,img:'https://monyo.az/v4/uploads/a_1203_20220515145612708640057.jpg'},
+    {id:'pz4',name:'Pepperoni pizza',price:16,img:'https://monyo.az/v4/uploads/a_1203_20220515145719381071426.jpg'},
+    {id:'pz5',name:'Sezar Pizza',price:16,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306130002141288626215.jpg'},
+    {id:'pz6',name:'Çörək səbəti',price:2,img:null}
+  ],
+  meyveler:[
+    {id:'m1',name:'Meyvə assorti',price:15,img:'https://monyo.az/v4/uploads/a_1203_202205151608141617876934.jpg'},
+    {id:'m2',name:'Meyvə salatı',price:7,img:'https://monyo.az/v4/uploads/a_1203_202206070054171587774031.jpg'},
+    {id:'m3',name:'Sadə meyvə',price:10,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230612195552527428556.jpg'},
+    {id:'m4',name:'Giləmeyvə',price:8,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306121956511449623073.jpg'},
+    {id:'m5',name:'Alça əzməsi',price:5,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_202306121958041733550983.jpg'},
+    {id:'m6',name:'Yemiş',price:4,img:null},{id:'m7',name:'Qarpız',price:4,img:null},{id:'m8',name:'Meyvə assorti böyük',price:25,img:null}
+  ],
+  desertler:[
+    {id:'d1',name:'Dondurma (3 top)',price:7,img:'https://monyo.az/v4/uploads/a_1203_20220607004221452045488.jpg'},
+    {id:'d2',name:'Napoleon',price:10,img:'https://monyo.az/v4/uploads2/uploads2024-07/a_1203_20240703174308827999534.jpg'},
+    {id:'d3',name:'Ballı tort',price:10,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230613001150455656165.jpg'},
+    {id:'d4',name:'Cookies biscuit',price:3,desc:'2 ədəd',img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230613001325466213958.jpg'},
+    {id:'d5',name:'Paxlava',price:7,img:null},{id:'d6',name:'Şokolad',price:5,img:null},
+    {id:'d7',name:'Kunefe',price:9,img:null},{id:'d8',name:'Mürəbbə',price:6,img:null},{id:'d9',name:'Ceviz dəsti',price:12,img:null}
+  ],
+  'isti-ickilər':[
+    {id:'ii1',name:'Sadə çay',price:6,img:'https://monyo.az/v4/uploads/a_1203_202205151616261347137634.jpg'},
+    {id:'ii2',name:'Espresso',price:4,img:'https://monyo.az/v4/uploads/a_1203_202205151621301835878008.jpg'},
+    {id:'ii3',name:'Espresso double',price:6,img:'https://monyo.az/v4/uploads/a_1203_202205151622171777832322.jpg'},
+    {id:'ii4',name:'Cappuccino',price:7,img:null},{id:'ii5',name:'Latte',price:8,img:'https://monyo.az/v4/uploads2/uploads2024-11/a_1203_20241105153919985357419.jpg'},
+    {id:'ii6',name:'Americano',price:5,img:null},{id:'ii7',name:'Jasmine çay',price:8,img:null},{id:'ii8',name:'Yaşıl çay',price:6,img:null}
+  ],
+  'meyvə-sulari':[
+    {id:'ms1',name:'Portağal şirəsi',price:7,img:null},{id:'ms2',name:'Ananas şirəsi',price:14,img:null},
+    {id:'ms3',name:'Qreyfrut şirəsi',price:8,img:null},{id:'ms4',name:'Alma şirəsi',price:5,img:null},
+    {id:'ms5',name:'Kök şirəsi',price:5,img:null},{id:'ms6',name:'Limon şirəsi',price:5,img:null}
+  ],
+  alkoqolsuz:[
+    {id:'ak1',name:'Limonad Evsayağı (1L)',price:10,img:'https://monyo.az/v4/uploads/a_1203_20220515175714281078682.jpg'},
+    {id:'ak2',name:'Mojito (alkoqolsuz)',price:8,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180019591321916819.jpg'},
+    {id:'ak3',name:'Hurricane',price:6,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618004630879644152.jpg'},
+    {id:'ak4',name:'Tropical Breeze',price:6,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180021121818660570.jpg'},
+    {id:'ak5',name:'Milkshake',price:8,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180037401985168273.jpg'},
+    {id:'ak6',name:'Banana Oat',price:8,img:null},
+    {id:'ak7',name:'Appletini',price:6,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180045452104266119.jpg'},
+    {id:'ak8',name:'Evsayağı Limonad (stəkan)',price:6,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180042461481954220.jpg'},
+    {id:'ak9',name:'Soyuq çay',price:6,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618004030441937584.jpg'}
+  ],
+  alkoqollu:[
+    {id:'al1',name:'Mojito',price:15,img:'https://monyo.az/v4/uploads/a_1203_20220515171827555957516.jpg'},
+    {id:'al2',name:'Aperol Spritz',price:17,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406172345152104856987.jpg'},
+    {id:'al3',name:'Long Island Ice Tea',price:17,img:'https://monyo.az/v4/uploads/a_1203_20220515172520914018239.jpg'},
+    {id:'al4',name:'Strawberry Daiquri',price:14,img:'https://monyo.az/v4/uploads/a_1203_20220515171952235355880.jpg'},
+    {id:'al5',name:'Sex On The Beach',price:15,img:'https://monyo.az/v4/uploads/a_1203_20220515172739342638728.jpg'},
+    {id:'al6',name:'Cosmopolitan',price:12,img:'https://monyo.az/v4/uploads/a_1203_20220515172928705590319.jpg'},
+    {id:'al7',name:'Blue Lagoon',price:15,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618004723530751625.jpg'},
+    {id:'al8',name:'Margarita',price:13,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618000923445363777.jpg'},
+    {id:'al9',name:'Bellini',price:11,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618000759870698594.jpg'},
+    {id:'al10',name:'Pina Colada',price:13,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180006511549024493.jpg'},
+    {id:'al11',name:'Negroni',price:15,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618000418125739463.jpg'},
+    {id:'al12',name:'Whiskey Sour',price:11,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180000531494408524.jpg'},
+    {id:'al13',name:'White Russian',price:11,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618000156104107930.jpg'},
+    {id:'al14',name:'Gin & Tonic',price:13,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_2024061723590365319965.jpg'},
+    {id:'al15',name:'Old Fashioned',price:12,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406172359511409198160.jpg'},
+    {id:'al16',name:'Espresso Martini',price:11,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240617235811274468219.jpg'},
+    {id:'al17',name:'Cuba Libre',price:12,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406172353272140025257.jpg'},
+    {id:'al18',name:'Caspian Exotic',price:11,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240617235211252131479.jpg'},
+    {id:'al19',name:'Muay Thai',price:12,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180003201754956380.jpg'}
+  ],
+  serinlesdirici:[
+    {id:'sr1',name:'Coca-Cola',price:5,img:'https://monyo.az/v4/uploads/a_1203_202205151743531491059162.jpg'},
+    {id:'sr2',name:'Fanta',price:5,img:'https://monyo.az/v4/uploads/a_1203_20220515175206706509964.jpg'},
+    {id:'sr3',name:'Sprite',price:5,img:'https://monyo.az/v4/uploads/a_1203_20220515175309324297576.jpg'},
+    {id:'sr4',name:'Red Bull',price:8,img:'https://monyo.az/v4/uploads/a_1203_2022051518102314063921.jpg'},
+    {id:'sr5',name:'Ice Tea',price:5,img:'https://monyo.az/v4/uploads/a_1203_20220515180834328943980.jpg'},
+    {id:'sr6',name:'Mineral su',price:4,img:'https://monyo.az/v4/uploads/a_1203_20220607005512451902736.jpg'},
+    {id:'sr7',name:'Ayran',price:3,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180100031453336399.jpg'},
+    {id:'sr8',name:'Qazsız Su',price:4,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406180053231351431293.jpg'},
+    {id:'sr9',name:'Kompot assortiment',price:6,img:'https://monyo.az/v4/uploads/a_1203_20220515185602683673270.jpg'},
+    {id:'sr10',name:'Meyvə şirəsi (1L)',price:6,img:'https://monyo.az/v4/uploads/a_1203_20220515175540371425205.jpg'},
+    {id:'sr11',name:'Meyvə şirəsi (0.25L)',price:2,img:null},{id:'sr12',name:'Tonic (0.25L)',price:7,img:null},{id:'sr13',name:'Sarakiz fresh',price:3.5,img:null}
+  ],
+  piveler:[
+    {id:'pi1',name:'Xırdalan (0.5L)',price:6,img:'https://monyo.az/v4/uploads/a_1203_20220515190839613726057.jpg'},
+    {id:'pi2',name:'Efes (0.33L)',price:8,img:'https://monyo.az/v4/uploads/a_1203_202205151910002084201736.jpg'},
+    {id:'pi3',name:'Efes draft (0.5L)',price:8,img:'https://monyo.az/v4/uploads/a_1203_20220515191128423427833.jpg'},
+    {id:'pi4',name:'Heineken (0.33L)',price:9,img:'https://monyo.az/v4/uploads/a_1203_20220515191243855249543.jpg'},
+    {id:'pi5',name:'Corona (0.33L)',price:9,img:'https://monyo.az/v4/uploads/a_1203_202205151913371486909010.jpg'},
+    {id:'pi6',name:'Miller (0.33L)',price:9,img:'https://monyo.az/v4/uploads/a_1203_202205151914371692078904.jpg'},
+    {id:'pi7',name:'Xırdalan Filtersiz',price:7,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618010717861568198.jpg'},
+    {id:'pi8',name:'Xırdalan Zero',price:5,img:null},{id:'pi9',name:'Carlsberg',price:8,img:null},{id:'pi10',name:'Blanj',price:9,img:null}
+  ],
+  araqlar:[
+    {id:'ar1',name:'Finlandiya (50cl)',price:6,img:null},{id:'ar2',name:'Finlandiya (0.7L)',price:65,img:null},
+    {id:'ar3',name:'Stolichnaya (50cl)',price:5,img:null},{id:'ar4',name:'Stolichnaya (0.5L)',price:40,img:null},
+    {id:'ar5',name:'Gray Goose (0.5L)',price:100,img:null},{id:'ar6',name:'Marosha (50cl)',price:4,img:null},{id:'ar7',name:'Absolut (0.7L)',price:75,img:null}
+  ],
+  serablar:[
+    {id:'se1',name:'Kindzmarauli',price:50,img:'https://monyo.az/v4/uploads/a__20220515204711398469892.jpg'},
+    {id:'se2',name:'Meysəri Məxməri',price:45,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230624103812539333726.jpg'},
+    {id:'se3',name:'Savalan Merlot',price:35,img:'https://monyo.az/v4/uploads2/uploads2024-11/a_1203_2024110516303938687749.jpg'},
+    {id:'se4',name:'Savalan Merlot (qədəh)',price:8,img:null},
+    {id:'se5',name:'Savalan Chardonnay',price:35,img:'https://monyo.az/v4/uploads2/uploads2024-11/a_1203_202411051635231900896103.jpg'},
+    {id:'se6',name:'Terra Leone',price:40,img:'https://monyo.az/v4/uploads2/uploads2024-11/a_1203_202411051722411673567096.jpg'},
+    {id:'se7',name:'Meyseri Sədəf',price:40,img:'https://monyo.az/v4/uploads2/uploads2024-11/a_1203_202411051638371101043047.jpg'},
+    {id:'se8',name:'Meyseri Rose',price:38,img:null},{id:'se9',name:'Elcoto Bianco',price:80,img:null},{id:'se10',name:'Elcoto Rioja',price:80,img:null}
+  ],
+  tekila:[
+    {id:'tk1',name:'Olmeca Bianco (50gr)',price:7,img:null},{id:'tk2',name:'Olmeca Gold (50gr)',price:8,img:null},
+    {id:'tk3',name:'Patron (50gr)',price:15,img:null},{id:'tk4',name:'Sierra (50gr)',price:5,img:null},
+    {id:'tk5',name:'Olmeca Bianco (0.5L)',price:50,img:null},{id:'tk6',name:'Patron (1L)',price:190,img:null}
+  ],
+  viskiler:[
+    {id:'vi1',name:'Chivas 12 (50gr)',price:9,img:'https://monyo.az/v4/uploads/a_1203_202205160018091667935706.jpg'},
+    {id:'vi2',name:'Chivas 18 (50gr)',price:17,img:'https://monyo.az/v4/uploads/a_1203_202205160027122009062106.jpg'},
+    {id:'vi3',name:'Jameson (50gr)',price:8,img:'https://monyo.az/v4/uploads/a_1203_20220516005009100453387.jpg'},
+    {id:'vi4',name:'Monkey Shoulders (50gr)',price:10,img:'https://monyo.az/v4/uploads/a_1203_20220516005616283630984.jpg'},
+    {id:'vi5',name:'Jack Daniels (50gr)',price:8,img:'https://monyo.az/v4/uploads/a_1203_20220516010251903005106.jpg'},
+    {id:'vi6',name:'J&B (50gr)',price:7,img:'https://monyo.az/v4/uploads/a_1203_20220516011044763066617.jpg'},
+    {id:'vi7',name:'Glenfidich (0.7L)',price:130,img:null},{id:'vi8',name:'JW Gold Reserve (0.7L)',price:110,img:null},{id:'vi9',name:'JW Red Label (50cl)',price:7,img:null}
+  ],
+  rom:[
+    {id:'ro1',name:'Captain Morgan Gold (50cl)',price:7,img:'https://monyo.az/v4/uploads/a_1203_20220516012635327185764.jpg'},
+    {id:'ro2',name:'Captain Morgan Black (50gr)',price:7,img:'https://monyo.az/v4/uploads/a_1203_20220516013007393046485.jpg'},
+    {id:'ro3',name:'Bacardi Black (50cl)',price:6,img:'https://monyo.az/v4/uploads/a_1203_202205160132412007469899.jpg'},
+    {id:'ro4',name:'Bacardi Superior (50cl)',price:6,img:'https://monyo.az/v4/uploads/a_1203_202205160837151281556261.jpg'}
+  ],
+  konyak:[
+    {id:'ko1',name:'Gold Baku (50gr)',price:5,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406181319231714176765.jpg'},
+    {id:'ko2',name:'Gold Baku (0.5L)',price:40,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406181319301549177971.jpg'},
+    {id:'ko3',name:'Remy Martin VSOP (50cl)',price:12,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_202406181322271585407589.jpg'},
+    {id:'ko4',name:'Remy Martin VSOP (şüşə)',price:190,img:null}
+  ],
+  sampan:[
+    {id:'sm1',name:'Bottega Brut Spumante',price:30,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618131456311913090.jpg'},
+    {id:'sm2',name:'Prosecco Cinzano (0.75L)',price:100,img:'https://monyo.az/v4/uploads2/uploads2024-06/a_1203_20240618130751780062684.jpg'},
+    {id:'sm3',name:'Martini Rose',price:55,img:null},{id:'sm4',name:'Bottega (qədəh)',price:10,img:null}
+  ],
+  martini:[
+    {id:'mr1',name:'Martini Bianco (50gr)',price:7,img:null},{id:'mr2',name:'Martini Extra Dry (50gr)',price:7,img:null},
+    {id:'mr3',name:'Martini Rosso (50gr)',price:7,img:null},{id:'mr4',name:'Martini Bianco (1L)',price:60,img:null}
+  ],
+  likor:[
+    {id:'li1',name:'Jägermeister (50gr)',price:8,img:'https://monyo.az/v4/uploads/a_1203_202205160902591198910408.jpg'},
+    {id:'li2',name:'Baileys (50gr)',price:7,img:'https://monyo.az/v4/uploads/a_1203_202205160905271076908452.jpg'},
+    {id:'li3',name:'Kahula (50cl)',price:7,img:null},{id:'li4',name:'Malibu (50cl)',price:7,img:null},
+    {id:'li5',name:'Campari (50cl)',price:7,img:null},{id:'li6',name:'Aperol (50cl)',price:7,img:null},{id:'li7',name:'Cointreau (50cl)',price:9,img:null}
+  ],
+  qelyanlar:[
+    {id:'ql1',name:'Qəlyan çaşkada',price:30,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230621014922407599540.jpg'},
+    {id:'ql2',name:'Qəlyan qreyfrut',price:35,img:'https://monyo.az/v4/uploads2/uploads2023-06/a_1203_20230621014952425506060.jpg'},
+    {id:'ql3',name:'Qəlyan Alma',price:35,img:null},{id:'ql4',name:'Qəlyan Ananas',price:45,img:null}
+  ]
+};
+
+// STATE
+let cart=[],activeCat='all',curItem=null,itemQty=1;
+
+// THEME
+let dark=false;
+function toggleTheme(){dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'light');document.getElementById('themeBtn').textContent=dark?'☀️':'🌙'}
+
+// LANG
+function toggleLang(e){e.stopPropagation();document.getElementById('langDd').classList.toggle('open')}
+function setLang(l,f){document.getElementById('langFlag').src=f;document.getElementById('langDd').classList.remove('open');document.getElementById('searchIn').placeholder=l==='az'?'Məhsul axtar...':l==='ru'?'Поиск...':'Search...'}
+document.addEventListener('click',()=>document.getElementById('langDd').classList.remove('open'));
+
+// CAT NAV
+function renderCatNav(){
+  const nav=document.getElementById('catNav');
+  nav.innerHTML=`<div class="cat-tab ${activeCat==='all'?'active':''}" onclick="setCat('all')">🍽️ Hamısı</div>`;
+  CATS.forEach(c=>{if(!(ITEMS[c.id]||[]).length)return;nav.innerHTML+=`<div class="cat-tab ${activeCat===c.id?'active':''}" onclick="setCat('${c.id}')">${c.icon} ${c.name}</div>`});
+}
+
+function setCat(id){activeCat=id;renderCatNav();renderMenu();if(id!=='all'){setTimeout(()=>{const el=document.getElementById('s-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},80)}else window.scrollTo({top:0,behavior:'smooth'})}
+
+// MENU
+function renderMenu(f=''){
+  const wrap=document.getElementById('menuWrap');
+  let html='',any=false;
+  CATS.forEach((cat,ci)=>{
+    if(activeCat!=='all'&&activeCat!==cat.id)return;
+    let items=(ITEMS[cat.id]||[]);
+    if(f)items=items.filter(i=>i.name.toLowerCase().includes(f.toLowerCase()));
+    if(!items.length)return;
+    any=true;
+    html+=`<div class="sec-title" id="s-${cat.id}"><h2>${cat.icon} ${cat.name}</h2><span class="sec-count">${items.length}</span></div><div class="items-grid">`;
+    items.forEach((item,i)=>{
+      const delay=Math.min(i*40,300);
+      const inCart=cart.find(c=>c.id===item.id);
+      if(item.img){
+        html+=`<div class="m-card" style="animation-delay:${delay}ms" onclick="openItem('${cat.id}','${item.id}')">
+          <div class="card-img-wrap"><img class="card-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.outerHTML='<div class=\\'card-ph\\'>${cat.icon}</div>'"></div>
+          <div class="card-body">
+            <div class="card-name">${item.name}</div>
+            ${item.desc?`<div class="card-desc">${item.desc}</div>`:''}
+            <div class="card-bot"><span class="card-price">${item.price} ₼</span><button class="add-btn ${inCart?'in':''}" onclick="event.stopPropagation();qAdd('${cat.id}','${item.id}',this)">+</button></div>
+          </div></div>`;
+      }else{
+        html+=`<div class="m-card wide" style="animation-delay:${delay}ms" onclick="openItem('${cat.id}','${item.id}')">
+          <div class="card-img-wrap"><div class="card-ph">${cat.icon}</div></div>
+          <div class="card-body">
+            <div class="card-name">${item.name}</div>
+            ${item.desc?`<div class="card-desc">${item.desc}</div>`:''}
+            <div class="card-bot"><span class="card-price">${item.price} ₼</span><button class="add-btn ${inCart?'in':''}" onclick="event.stopPropagation();qAdd('${cat.id}','${item.id}',this)">+</button></div>
+          </div></div>`;
+      }
+    });
+    html+='</div>';
+  });
+  if(!any)html=`<div class="no-res"><div class="nr-ic">🔍</div><p>Nəticə tapılmadı</p></div>`;
+  wrap.innerHTML=html;
+}
+
+function onSearch(){const v=document.getElementById('searchIn').value.trim();if(v){activeCat='all';renderCatNav()}renderMenu(v)}
+
+// ITEM SHEET
+function openItem(cid,iid){
+  const cat=CATS.find(c=>c.id===cid);const item=(ITEMS[cid]||[]).find(i=>i.id===iid);
+  if(!item||!cat)return;curItem={...item,cid,icon:cat.icon};itemQty=1;renderItemSheet();
+  document.getElementById('iOvr').classList.add('open');document.getElementById('iSheet').classList.add('open');document.body.style.overflow='hidden';
+}
+function renderItemSheet(){
+  const item=curItem;const tot=(item.price*itemQty).toFixed(2);
+  document.getElementById('iContent').innerHTML=`
+    ${item.img?`<img class="is-img" src="${item.img}" alt="${item.name}" onerror="this.style.display='none'">`:''}
+    <div class="is-body">
+      <div class="is-name">${item.name}</div>
+      ${item.desc?`<div class="is-desc">${item.desc}</div>`:''}
+      <div class="is-price">${tot} ₼</div>
+      <div class="qty-row">
+        <button class="qty-ctrl" onclick="chQty(-1)">−</button>
+        <span class="qty-val">${itemQty}</span>
+        <button class="qty-ctrl" onclick="chQty(1)">+</button>
+      </div>
+      <button class="main-btn" onclick="addCart()">Səbətə əlavə et — ${tot} ₼</button>
+    </div>`;
+}
+function chQty(d){itemQty=Math.max(1,itemQty+d);renderItemSheet()}
+function closeItem(){document.getElementById('iOvr').classList.remove('open');document.getElementById('iSheet').classList.remove('open');document.body.style.overflow=''}
+function qAdd(cid,iid,btn){const cat=CATS.find(c=>c.id===cid);const item=(ITEMS[cid]||[]).find(i=>i.id===iid);if(!item)return;pushCart(item,1);btn.classList.add('in');showToast('✓ '+item.name)}
+function addCart(){if(!curItem)return;pushCart(curItem,itemQty);closeItem();showToast('✓ '+curItem.name+' əlavə edildi')}
+function pushCart(item,qty){const ex=cart.find(c=>c.id===item.id);if(ex)ex.qty+=qty;else cart.push({...item,qty});updCartBar()}
+function updCartBar(){
+  const tot=cart.reduce((s,i)=>s+i.price*i.qty,0);const qty=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cbTotal').textContent=tot.toFixed(2)+' ₼';
+  document.getElementById('cbQty').textContent=qty;
+  document.getElementById('cartBar').classList.toggle('vis',cart.length>0);
+}
+
+// CART SHEET
+function openCart(){renderCart();document.getElementById('cOvr').classList.add('open');document.getElementById('cSheet').classList.add('open');document.body.style.overflow='hidden'}
+function closeCart(){document.getElementById('cOvr').classList.remove('open');document.getElementById('cSheet').classList.remove('open');document.body.style.overflow=''}
+function renderCart(success=false){
+  if(success){
+    document.getElementById('cContent').innerHTML=`<div class="success-sc"><div class="suc-icon">✅</div><div class="suc-title">Sifarişiniz qəbul edildi!</div><div class="suc-sub">Zəhmət olmasa gözləyin,<br>ofisiant tezliklə yanınıza gələcək.</div><button class="main-btn" onclick="closeCart()">Menyuya qayıt</button></div>`;
+    return;
+  }
+  const tot=cart.reduce((s,i)=>s+i.price*i.qty,0);const svc=tot*.1;const grand=tot+svc;
+  let rows='';
+  if(!cart.length){rows=`<div class="cart-empty"><div class="icon">🛒</div><p>Səbət boşdur</p></div>`}
+  else{
+    cart.forEach((item,idx)=>{
+      const imgEl=item.img?`<img class="ci-img" src="${item.img}" alt="" onerror="this.outerHTML='<div class=\\'ci-img\\'>${item.icon||'🍽️'}</div>'">`:`<div class="ci-img" style="display:flex;align-items:center;justify-content:center;font-size:22px">${item.icon||'🍽️'}</div>`;
+      rows+=`<div class="ci-row">${imgEl}<div class="ci-info"><div class="ci-name">${item.name}</div><div class="ci-unit">${item.price} ₼ × ${item.qty}</div></div><div class="ci-ctrl"><button class="cq-btn del" onclick="chCart(${idx},-1)">−</button><span class="ci-qty">${item.qty}</span><button class="cq-btn" onclick="chCart(${idx},1)">+</button></div><span class="ci-price">${(item.price*item.qty).toFixed(2)} ₼</span></div>`;
+    });
+  }
+  const tableEl='';
+  document.getElementById('cContent').innerHTML=`
+    <div class="cs-title">🛒 Sifarişim</div>${rows}
+    ${cart.length?`<div class="cs-summary">
+      <div class="sum-row"><span>Məhsullar</span><span>${tot.toFixed(2)} ₼</span></div>
+      <div class="sum-row"><span>Xidmət haqqı (10%)</span><span>${svc.toFixed(2)} ₼</span></div>
+      <div class="sum-div"></div>
+      <div class="sum-row tot"><span>Cəmi</span><span>${grand.toFixed(2)} ₼</span></div>
+    </div>
+    ${tableEl}
+    <label class="field-label" style="margin-top:8px">Qeyd (istəyə görə)</label>
+    <textarea class="note-in" id="noteIn" rows="2" placeholder="Əlavə istəklər..."></textarea>
+    <button class="main-btn" onclick="submitOrder()">Sifarişi Təsdiqlə — ${grand.toFixed(2)} ₼</button>`:''}`;
+}
+function chCart(idx,d){cart[idx].qty=Math.max(0,cart[idx].qty+d);if(cart[idx].qty===0)cart.splice(idx,1);updCartBar();renderCart()}
+function submitOrder(){
+  cart=[];updCartBar();renderCart(true);
+}
+
+// TOAST
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+
+// INIT
+renderCatNav();renderMenu();
+</script>
+</body>
+</html>
